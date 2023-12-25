@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class ProductService {
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
     public void createProduct(ProductDto productDto){
         Product product = Product.builder()
                 .name(productDto.getName())
