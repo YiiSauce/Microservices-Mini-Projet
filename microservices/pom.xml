@@ -7,7 +7,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.2.1</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
 
     <groupId>com.miniprojet</groupId>
@@ -17,6 +17,9 @@
     <modules>
         <module>first-service</module>
         <module>second-service</module>
+        <module>gateway-service</module>
+        <module>discovery-service</module>
+        <module>config-service</module>
     </modules>
 
     <properties>
@@ -41,5 +44,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

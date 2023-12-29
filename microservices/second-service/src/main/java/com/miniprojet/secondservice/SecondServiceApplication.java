@@ -21,24 +21,24 @@ public class SecondServiceApplication {
 		SpringApplication.run(SecondServiceApplication.class, args);
 	}
 
-	@Bean
-	CommandLineRunner start(
-			RendezvousService rendezvousService,
-			ConsultationService consultationService,
-			RendezvousRepository rendezvousRepository
-	) {
-		return args -> {
-			RendezVous rendezvous = new RendezVous();
-			rendezvous.setDate(new Date());
-			rendezvous.setStatusRDV(StatusRDV.PENDING);
-			rendezvousService.saveRendezVous(rendezvous);
-
-			RendezVous rendezvous1 = rendezvousRepository.findById(1L).orElse(null);
-			Consultation consultation = new Consultation();
-			consultation.setDateConsultation(rendezvous1.getDate());
-			consultation.setRendezVous(rendezvous1);
-			consultation.setRapport("Rapport de la consultation");
-			consultationService.saveConsultation(consultation);
-		};
-	}
+//	@Bean
+//	CommandLineRunner start(
+//			RendezvousService rendezvousService,
+//			ConsultationService consultationService,
+//			RendezvousRepository rendezvousRepository
+//	) {
+//		return args -> {
+//			RendezVous rendezvous = new RendezVous();
+//			rendezvous.setDate(new Date());
+//			rendezvous.setStatusRDV(StatusRDV.PENDING);
+//			rendezvousService.saveRendezVous(rendezvous);
+//
+//			RendezVous rendezvous1 = rendezvousRepository.findById(1L).orElse(null);
+//			Consultation consultation = new Consultation();
+//			consultation.setDateConsultation(rendezvous1.getDate());
+//			consultation.setRendezVous(rendezvous1);
+//			consultation.setRapport("Rapport de la consultation");
+//			consultationService.saveConsultation(consultation);
+//		};
+//	}
 }
