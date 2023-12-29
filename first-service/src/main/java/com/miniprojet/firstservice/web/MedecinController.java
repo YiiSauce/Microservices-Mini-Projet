@@ -1,7 +1,8 @@
 package com.miniprojet.firstservice.web;
 
-import com.example.hospital.entities.Medecin;
-import com.example.hospital.service.MedecinService;
+import com.miniprojet.firstservice.entities.Medecin;
+import com.miniprojet.firstservice.service.MedecinService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,14 +1,16 @@
 package com.miniprojet.firstservice.web;
 
-import com.example.hospital.entities.Patient;
-import com.example.hospital.service.PatientsService;
+import com.miniprojet.firstservice.entities.Patient;
+import com.miniprojet.firstservice.service.PatientsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
 
+@RestController
+//@RequiredArgsConstructor
 public class PatientController {
     @Autowired
     private PatientsService patientsService;

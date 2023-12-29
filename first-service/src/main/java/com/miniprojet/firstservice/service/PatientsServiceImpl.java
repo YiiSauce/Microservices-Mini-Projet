@@ -1,11 +1,12 @@
 package com.miniprojet.firstservice.service;
 
-import com.example.hospital.entities.Patient;
-import com.example.hospital.repositories.PatientRepository;
+import com.miniprojet.firstservice.entities.Patient;
+import com.miniprojet.firstservice.repositories.PatientRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class PatientsServiceImpl  implements  PatientsService{

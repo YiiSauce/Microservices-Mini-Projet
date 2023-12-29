@@ -1,7 +1,7 @@
 package com.miniprojet.firstservice.service;
 
-import com.example.hospital.entities.Medecin;
-import com.example.hospital.repositories.MedecinRepository;
+import com.miniprojet.firstservice.entities.Medecin;
+import com.miniprojet.firstservice.repositories.MedecinRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

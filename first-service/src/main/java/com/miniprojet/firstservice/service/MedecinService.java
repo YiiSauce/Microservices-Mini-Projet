@@ -1,6 +1,6 @@
 package com.miniprojet.firstservice.service;
 
-import com.example.hospital.entities.Medecin;
+import com.miniprojet.firstservice.entities.Medecin;
 
 import java.util.List;
 

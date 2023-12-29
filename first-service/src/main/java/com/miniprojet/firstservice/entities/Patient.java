@@ -17,8 +17,8 @@ public class Patient {
     @Temporal(TemporalType.DATE)
     private Date dateNaissance;
     private boolean malade;
-    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY )
-    private Collection<RendezVous>RendezVous;
+//    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY )
+//    private Collection<RendezVous>RendezVous;
 
 
 }
