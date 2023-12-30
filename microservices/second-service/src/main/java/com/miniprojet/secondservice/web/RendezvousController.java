@@ -11,10 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class RendezvousController {
-//    @Autowired
+    @Autowired
     private RendezvousService rendezvousService;
+    @Autowired
     private MedecinRestClient medecinRestClient;
 
     @GetMapping(path = "rendezVous")
