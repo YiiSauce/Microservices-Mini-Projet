@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "FIRST-SERVICE")
 public interface MedecinRestClient {
     @GetMapping("medecins/{id}")
-    @CircuitBreaker(name = "medecinsService",fallbackMethod = "getDefaultMedecin")
+    @CircuitBreaker(name = "medecinsService",fallbackMethod = "getMedecinById")
     Medecin getMedecinById(@PathVariable Long id);
-    default Medecin getDefaultCustomer(Long id,Exception exception){
-        Medecin medecin=new Medecin();
-        medecin.setId(id);
-        medecin.setNom("not available");
-        medecin.setEmail("not available");
-        medecin.setSpecalite("not available");
-        return medecin;
-    }
+//    default Medecin getDefaultCustomer(Long id,Exception exception){
+//        Medecin medecin=new Medecin();
+//        medecin.setId(id);
+//        medecin.setNom("not available");
+//        medecin.setEmail("not available");
+//        medecin.setSpecalite("not available");
+//        return medecin;
+//    }
 }
