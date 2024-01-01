@@ -11,9 +11,9 @@ import java.util.List;
 @FeignClient(name = "FIRST-SERVICE")
 public interface MedecinRestClient {
     @GetMapping("/medecins/{id}")
-    @CircuitBreaker(name = "medecinsService",fallbackMethod = "getMedecinById")
+//    @CircuitBreaker(name = "medecinService",fallbackMethod = "getMedecinById")
     public Medecin getMedecinById(@PathVariable Long id);
-    @CircuitBreaker(name = "medecinsService",fallbackMethod = "getMedecinById")
+//    @CircuitBreaker(name = "medecinsService",fallbackMethod = "getMedecins")
     @GetMapping("/medecins")
     public List<Medecin> getMedecins();
 

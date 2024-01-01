@@ -29,36 +29,37 @@ public class SecondServiceApplication {
 		SpringApplication.run(SecondServiceApplication.class, args);
 	}
 
-	@Bean
-	CommandLineRunner start(
-			RendezvousService rendezvousService,
-			ConsultationService consultationService,
-			RendezvousRepository rendezvousRepository,
-			MedecinRestClient medecinRestClient
-//			PatientRestClient patientRestClient
-	) {
-		return args -> {
-			List<Medecin> customers=medecinRestClient.getMedecins().stream().toList();
-			Long medecinId=1L;
-			Medecin medecin=medecinRestClient.getMedecinById(medecinId);
-
-			for (int i = 0; i <20 ; i++) {
-			RendezVous rendezvous = RendezVous.builder()
-					.date(new Date())
-					.annule(false)
-					.statusRDV(StatusRDV.PENDING)
-							.consultation()
-			rendezvousService.saveRendezVous(rendezvous);
-
-				//RendezVous savedrendezvous = rendezvousRepository.save(rendezvous);
-			}
-
-			RendezVous rendezvous1 = rendezvousRepository.findById(1L).orElse(null);
-			Consultation consultation = new Consultation();
-			consultation.setDateConsultation(rendezvous1.getDate());
-			consultation.setRendezVous(rendezvous1);
-			consultation.setRapport("Rapport de la consultation");
-			consultationService.saveConsultation(consultation);
-		};
-	}
+//	@Bean
+//	CommandLineRunner start(
+//			RendezvousService rendezvousService,
+//			ConsultationService consultationService,
+//			RendezvousRepository rendezvousRepository,
+//			MedecinRestClient medecinRestClient
+////			PatientRestClient patientRestClient
+//	) {
+//		return args -> {
+//			List<Medecin> medecins=medecinRestClient.getMedecins().stream().toList();
+//			Long medecinId=1L;
+//			Medecin medecin=medecinRestClient.getMedecinById(medecinId);
+//
+//			for (int i = 0; i <10 ; i++) {
+//			RendezVous rendezvous = RendezVous.builder()
+//					.date(new Date())
+//					.annule(false)
+//					.statusRDV(StatusRDV.PENDING)
+//					.medecinId(medecins.get(i).getId()).build();
+//			RendezVous savedRendezVous = rendezvousService.saveRendezVous(rendezvous);
+//
+//			Consultation consultation = Consultation.builder()
+//					.dateConsultation(new Date())
+//					.rapport("Rapport de la consultation")
+//					.rendezVous(savedRendezVous).build();
+//
+//			consultation.setDateConsultation(new Date());
+//			consultation.setRendezVous(savedRendezVous);
+//			consultationService.saveConsultation(consultation);
+//			}
+//
+//		};
+//	}
 }
