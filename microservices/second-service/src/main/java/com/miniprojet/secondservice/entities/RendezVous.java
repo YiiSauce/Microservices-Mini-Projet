@@ -25,13 +25,13 @@ public class RendezVous {
     @OneToOne(mappedBy = "rendezVous")
     private Consultation consultation;
 
+    private Long medecinId;
     @Transient
     private Medecin medecin;
-    private Long medecinId;
 
+    private Long patientId;
     @Transient
     private Patient patient;
-    private Long patientId;
 
 //    @ManyToOne
 //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

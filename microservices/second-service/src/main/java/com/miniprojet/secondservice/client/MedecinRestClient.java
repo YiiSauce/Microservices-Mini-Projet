@@ -6,11 +6,17 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
+
 @FeignClient(name = "FIRST-SERVICE")
 public interface MedecinRestClient {
-    @GetMapping("medecins/{id}")
+    @GetMapping("/medecins/{id}")
     @CircuitBreaker(name = "medecinsService",fallbackMethod = "getMedecinById")
-    Medecin getMedecinById(@PathVariable Long id);
+    public Medecin getMedecinById(@PathVariable Long id);
+    @CircuitBreaker(name = "medecinsService",fallbackMethod = "getMedecinById")
+    @GetMapping("/medecins")
+    public List<Medecin> getMedecins();
+
 //    default Medecin getDefaultCustomer(Long id,Exception exception){
 //        Medecin medecin=new Medecin();
 //        medecin.setId(id);
