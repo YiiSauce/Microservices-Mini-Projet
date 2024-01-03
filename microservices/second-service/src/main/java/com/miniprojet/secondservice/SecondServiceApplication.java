@@ -1,24 +1,9 @@
 package com.miniprojet.secondservice;
 
-import com.miniprojet.secondservice.client.MedecinRestClient;
-import com.miniprojet.secondservice.client.PatientRestClient;
-import com.miniprojet.secondservice.entities.Consultation;
-import com.miniprojet.secondservice.entities.RendezVous;
-import com.miniprojet.secondservice.entities.StatusRDV;
-import com.miniprojet.secondservice.model.Medecin;
-import com.miniprojet.secondservice.repositories.RendezvousRepository;
-import com.miniprojet.secondservice.services.ConsultationService;
-import com.miniprojet.secondservice.services.RendezvousService;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.context.annotation.Bean;
-
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Stream;
 
 @EnableDiscoveryClient
 @SpringBootApplication

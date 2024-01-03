@@ -32,10 +32,4 @@ public class RendezVous {
     private Long patientId;
     @Transient
     private Patient patient;
-
-//    @ManyToOne
-//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-//    private Patient patient;
-//    @ManyToOne
-//    private Medecin medecin;
 }
