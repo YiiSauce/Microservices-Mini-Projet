@@ -12,7 +12,7 @@ public interface RendezvousService {
 
     RendezVous getRendezVous(Long rendezvousId);
 
-    void DeleteRendezVous(Long id);
+    void deleteRendezVous(Long id);
 
     RendezVous updateRendezVous(RendezVous rendezVous);
 }
