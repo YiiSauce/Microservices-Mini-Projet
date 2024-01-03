@@ -4,6 +4,7 @@ import com.miniprojet.secondservice.client.FirstServiceRestClient;
 import com.miniprojet.secondservice.entities.RendezVous;
 import com.miniprojet.secondservice.model.Medecin;
 import com.miniprojet.secondservice.model.Patient;
+import com.miniprojet.secondservice.repositories.RendezvousRepository;
 import com.miniprojet.secondservice.services.RendezvousService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,8 @@ public class RendezvousController {
     private RendezvousService rendezvousService;
 //    @Autowired
 //    private MedecinRestClient medecinRestClient;
+    @Autowired
+    private RendezvousRepository rendezvousRepository;
     @Autowired
     private FirstServiceRestClient firstServiceRestClient;
 
@@ -40,7 +43,8 @@ public class RendezvousController {
     //DELETE
     @DeleteMapping("rendezVous/{rendezVousId}")
     public void deleteRendezVous(@PathVariable  Long rendezVousId){
-        rendezvousService.DeleteRendezVous(rendezVousId);
+        rendezvousRepository.deleteById(rendezVousId);
+//        rendezvousService.DeleteRendezVous(rendezVousId);
     }
     //CREATE
     @PostMapping("/rendezVous")

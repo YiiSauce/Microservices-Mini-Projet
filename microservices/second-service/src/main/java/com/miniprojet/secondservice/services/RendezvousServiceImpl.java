@@ -11,10 +11,10 @@ import java.util.List;
 @AllArgsConstructor
 public  class RendezvousServiceImpl  implements RendezvousService{
     private RendezvousRepository rendezvousRepository;
+
     @Override
     public RendezVous saveRendezVous(RendezVous rendezVous){
         return rendezvousRepository.save(rendezVous);
-
     }
     @Override
     public List<RendezVous> getAllRendezVous(){
