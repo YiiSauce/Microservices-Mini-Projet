@@ -1,24 +1,15 @@
 package com.miniprojet.secondservice.web;
 
-import com.miniprojet.secondservice.client.FirstServiceRestClient;
-import com.miniprojet.secondservice.entities.Consultation;
 import com.miniprojet.secondservice.entities.RendezVous;
-import com.miniprojet.secondservice.model.Medecin;
-import com.miniprojet.secondservice.model.Patient;
-import com.miniprojet.secondservice.repositories.ConsultationRepository;
-import com.miniprojet.secondservice.repositories.RendezvousRepository;
 import com.miniprojet.secondservice.services.RendezvousService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 public class RendezvousController {
+    @Autowired
     private RendezvousService rendezvousService;
-
     //READ
     @GetMapping(path = "rendezVous")
     public List<RendezVous> getRendezVous(){
@@ -37,7 +28,7 @@ public class RendezvousController {
         rendezvousService.deleteRendezVous(rendezVousId);
     }
     //CREATE
-    @PostMapping("/rendezVous")
+    @PostMapping("rendezVous")
     public RendezVous saveRendezVous(@RequestBody RendezVous rendezVous){
         return rendezvousService.saveRendezVous(rendezVous);
     }

@@ -15,11 +15,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public  class RendezvousServiceImpl  implements RendezvousService{
+    @Autowired
     private RendezvousRepository rendezvousRepository;
-    private RendezvousService rendezvousService;
+    @Autowired
     private ConsultationRepository consultationRepository;
+    @Autowired
     private FirstServiceRestClient firstServiceRestClient;
 
     @Override

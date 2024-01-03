@@ -4,7 +4,6 @@ import com.miniprojet.secondservice.entities.Consultation;
 import com.miniprojet.secondservice.services.ConsultationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -23,12 +22,10 @@ public class ConsultationController {
 
     @DeleteMapping("consultations/{consultationId}")
     public void deleteConsultation(@PathVariable  Long consultationId){
-
         consultationService.DeleteConsultation(consultationId);
     }
-    @PostMapping("/consultations")
+    @PostMapping("consultations")
     public Consultation saveConsultation(@RequestBody Consultation consultation){
-
         return consultationService.saveConsultation(consultation);
     }
 
