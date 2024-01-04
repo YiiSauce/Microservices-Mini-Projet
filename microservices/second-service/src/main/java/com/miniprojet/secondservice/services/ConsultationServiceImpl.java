@@ -22,6 +22,9 @@ public class ConsultationServiceImpl implements  ConsultationService{
         consultationRepository.deleteById(id);
     };
     public  Consultation updateConsultation(Consultation consultation){
-        return consultationRepository.save(consultation);
+        Consultation consultation1 = getConsultation(consultation.getId());
+        consultation1.setDateConsultation(consultation.getDateConsultation());
+        consultation1.setRapport(consultation.getRapport());
+        return consultationRepository.save(consultation1);
     };
 }

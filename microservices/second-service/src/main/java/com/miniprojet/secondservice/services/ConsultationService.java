@@ -1,8 +1,6 @@
 package com.miniprojet.secondservice.services;
 
-
 import com.miniprojet.secondservice.entities.Consultation;
-
 import java.util.List;
 
 public interface ConsultationService {

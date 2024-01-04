@@ -28,7 +28,6 @@ public class ConsultationController {
     public Consultation saveConsultation(@RequestBody Consultation consultation){
         return consultationService.saveConsultation(consultation);
     }
-
     @PutMapping("consultations/{consultationId}")
     public  Consultation updateConsultation( @PathVariable Long consultationId, @RequestBody Consultation consultation) {
         return consultationService.updateConsultation(consultation);
