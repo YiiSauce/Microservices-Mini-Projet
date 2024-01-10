@@ -1,13 +1,9 @@
 package com.miniprojet.firstservice.entities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.Collection;
 @Entity
 @Builder
-@ToString
 @Data @NoArgsConstructor @AllArgsConstructor
 public class Medecin {
     @Id
@@ -16,8 +12,4 @@ public class Medecin {
     private String nom;
     private String email;
     private String specalite;
-
-//    @OneToMany(mappedBy = "medecin", fetch= FetchType.LAZY)
-//    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-//    private Collection<RendezVous> RendezVous;
 }

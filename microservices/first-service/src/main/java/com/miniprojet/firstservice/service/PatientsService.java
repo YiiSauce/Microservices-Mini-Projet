@@ -11,5 +11,4 @@ public interface PatientsService {
     public Patient getPatient(Long auteurId);
     public void DeletePatient(Long id);
     public  Patient updatePatient(Patient patient);
-
 }

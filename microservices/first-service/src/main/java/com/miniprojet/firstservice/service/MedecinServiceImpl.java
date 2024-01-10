@@ -13,7 +13,6 @@ public class MedecinServiceImpl implements MedecinService {
     private MedecinRepository medecinRepository;
     public Medecin saveMedecin(Medecin medecin){
         return medecinRepository.save(medecin);
-
     }
     public List<Medecin> getAllMedecins(){
         return medecinRepository.findAll();
