@@ -18,36 +18,33 @@ import java.util.stream.Stream;
 @EnableDiscoveryClient
 @SpringBootApplication
 public class FirstServiceApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(FirstServiceApplication.class, args);
     }
 
-    @Bean
-    CommandLineRunner start(
-            PatientRepository patientRepository,
-            MedecinRepository medecinRepository,
-            MedecinService medecinService,
-            PatientsService patientsService
-    ) {
-        return args -> {
-            Stream.of("Mohammed", "najat", "hassan")
-                    .forEach(name -> {
-                        Patient patient = new Patient();
-                        patient.setNom(name);
-                        patient.setMalade(false);
-                        patient.setDateNaissance(new Date());
-                        patientsService.savePatient(patient);
-
-                    });
-            Stream.of("Bennani", "Adnani", "Benzabour")
-                    .forEach(name -> {
-                        Medecin medecin = new Medecin();
-                        medecin.setNom(name);
-                        medecin.setSpecalite(Math.random() > 0.5 ? "Cardio" : "Dentiste");
-                        medecin.setEmail(name + "@gamil.com");
-                        medecinService.saveMedecin(medecin);
-                    });
-        };
-    }
+//    @Bean
+//    CommandLineRunner start(
+//            MedecinService medecinService,
+//            PatientsService patientsService
+//    ) {
+//        return args -> {
+//            Stream.of("Youssef","Mohammed", "najat", "hassan","saida")
+//                    .forEach(name -> {
+//                        Patient patient = new Patient();
+//                        patient.setNom(name);
+//                        patient.setMalade(Math.random() > 0.5 ? false : true );
+//                        patient.setDateNaissance(new Date());
+//                        patientsService.savePatient(patient);
+//
+//                    });
+//            Stream.of("Bennani", "Adnani","Youssef","Zineb", "Benzabour")
+//                    .forEach(name -> {
+//                        Medecin medecin = new Medecin();
+//                        medecin.setNom(name);
+//                        medecin.setSpecalite(Math.random() > 0.5 ? "Cardio" : "Dentiste");
+//                        medecin.setEmail(name + "@gamil.com");
+//                        medecinService.saveMedecin(medecin);
+//                    });
+//        };
+//    }
 }

@@ -8,9 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+//Patient Controller
 @RestController
-//@RequiredArgsConstructor
 public class PatientController {
     @Autowired
     private PatientsService patientsService;

@@ -14,7 +14,6 @@ public interface FirstServiceRestClient {
     public Patient getPatientById(@PathVariable Long id);
     @GetMapping("/patients")
     public List<Patient> getPatients();
-
     @GetMapping("/medecins/{id}")
     public Medecin getMedecinById(@PathVariable Long id);
     @GetMapping("/medecins")

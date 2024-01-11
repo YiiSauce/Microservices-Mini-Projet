@@ -25,10 +25,18 @@ public  class RendezvousServiceImpl  implements RendezvousService{
 
     @Override
     public RendezVous saveRendezVous(RendezVous rendezVous){
+        Medecin medecin = firstServiceRestClient.getMedecinById(rendezVous.getMedecinId());
+        Patient patient = firstServiceRestClient.getPatientById(rendezVous.getPatientId());
+        if(medecin!=null && patient!=null){
+        rendezVous.setMedecin(medecin);
+        rendezVous.setPatient(patient);
         return rendezvousRepository.save(rendezVous);
+        }
+        return null;
     }
     @Override
     public List<RendezVous> getAllRendezVous(){
+
         return rendezvousRepository.findAll();
     };
     @Override
@@ -53,6 +61,17 @@ public  class RendezvousServiceImpl  implements RendezvousService{
     };
     @Override
     public  RendezVous updateRendezVous(RendezVous rendezVous){
-        return rendezvousRepository.save(rendezVous);
+        RendezVous rv = getRendezVous(rendezVous.getId());
+        rv.setStatusRDV(rendezVous.getStatusRDV());
+        rv.setDate(rendezVous.getDate());
+        rv.setAnnule(rendezVous.isAnnule());
+        rv.setConsultation(rendezVous.getConsultation());
+        rv.setPatientId(rendezVous.getPatientId());
+        rv.setMedecinId(rendezVous.getMedecinId());
+        Medecin medecin = firstServiceRestClient.getMedecinById(rendezVous.getMedecinId());
+        Patient patient = firstServiceRestClient.getPatientById(rendezVous.getPatientId());
+        rv.setMedecin(medecin);
+        rv.setPatient(patient);
+        return rendezvousRepository.save(rv);
     };
 }
