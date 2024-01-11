@@ -14,12 +14,10 @@ public class ConsultationController {
     public List<Consultation> getConsultations(){
         return consultationService.getAllConsultations();
     }
-
     @GetMapping("consultations/{consultationId}")
     public Consultation getConsultationById(@PathVariable Long consultationId){
         return consultationService.getConsultation(consultationId);
     }
-
     @DeleteMapping("consultations/{consultationId}")
     public void deleteConsultation(@PathVariable  Long consultationId){
         consultationService.DeleteConsultation(consultationId);
@@ -29,7 +27,7 @@ public class ConsultationController {
         return consultationService.saveConsultation(consultation);
     }
     @PutMapping("consultations/{consultationId}")
-    public  Consultation updateConsultation( @PathVariable Long consultationId, @RequestBody Consultation consultation) {
+    public  Consultation updateConsultation(@RequestBody Consultation consultation) {
         return consultationService.updateConsultation(consultation);
     }
 }

@@ -22,7 +22,6 @@ public  class RendezvousServiceImpl  implements RendezvousService{
     private ConsultationRepository consultationRepository;
     @Autowired
     private FirstServiceRestClient firstServiceRestClient;
-
     @Override
     public RendezVous saveRendezVous(RendezVous rendezVous){
         Medecin medecin = firstServiceRestClient.getMedecinById(rendezVous.getMedecinId());
@@ -35,10 +34,7 @@ public  class RendezvousServiceImpl  implements RendezvousService{
         return null;
     }
     @Override
-    public List<RendezVous> getAllRendezVous(){
-
-        return rendezvousRepository.findAll();
-    };
+    public List<RendezVous> getAllRendezVous(){return rendezvousRepository.findAll();}
     @Override
     public RendezVous getRendezVous(Long rendezvousId) {
         RendezVous rendezVous = rendezvousRepository.findById(rendezvousId).orElse(null);
