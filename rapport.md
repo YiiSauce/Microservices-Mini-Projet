@@ -1,237 +1,605 @@
-<div style="display:flex;justify-content:space-between">
-    <div>
-        <strong>
-            Realise par :
-        </strong>  
-        <br>&nbsp;&nbsp;&nbsp;&nbsp;Omar Lahbabi 
-        <br>&nbsp;&nbsp;&nbsp;&nbsp;Ilyas Belarbi 
-    </div>
-    <div>
-        2023-2024
-    </div>
-    <div>
-            <img src="./ensalogo.png" width="90" style="margin-top:20px;">
-        </div>
-</div>
-<br>
-<div>
-    <strong>
-        Filliere :
-    </strong>  IID2
-</div>
-<div style = "text-align:center">
-    <strong>
-        Encadre par : 
-    </strong>Mme Karroum Bouchra
-</div>
-<br>
-<div style="font-size:35px;font-weight:bold;text-align:center;">
-    Rapport Projet Java/JEE
-</div>
-<br>
-<div style = "color:#66c2ff;text-align:center">
-Location des voitures
-</div>
-<br>
+<img src="./screens/first1.jpg">
+
+<br><br>
 
 # Introduction
-&nbsp;&nbsp;&nbsp;La gestion efficace des déplacements est un enjeu crucial pour de nombreuses personnes, qu'elles soient en voyage d'affaires, en vacances, ou simplement en besoin d'un moyen de transport temporaire. Trouver une voiture adaptée, à un prix abordable et dans des délais courts peut souvent se révéler être un défi, surtout dans les grandes agglomérations ou les destinations touristiques très fréquentées.
-
-C'est dans ce contexte que __CarsForRent__, notre application de location de voiture, devient un outil indispensable. Elle offre une solution pratique et centralisée pour trouver et réserver le véhicule idéal en quelques clics. Grâce à [Nom de l'App], les utilisateurs ont accès à une large gamme de voitures, adaptées à toutes les exigences et budgets, simplifiant ainsi la planification des déplacements et assurant une expérience de location fluide et sans tracas.
+&nbsp;&nbsp;&nbsp;Ce rapport présente un mini-projet de gestion des rendez-vous et consultations médicales, développé avec une architecture microservices utilisant Spring Boot. L'objectif est d'optimiser la gestion des rendez-vous médicaux en adoptant une approche modulaire et scalable. Nous explorons le processus de conception, d'implémentation et de déploiement, mettant en avant les avantages de l'architecture microservices dans ce contexte spécifique. Ce rapport offre un aperçu des choix technologiques, des défis rencontrés et des perspectives d'amélioration continue. L'approche choisie vise à moderniser et à rendre plus efficace la gestion des rendez-vous médicaux.
 
 # Objectifs
 
-- __Espace Personnel :__
-  - Gestion des profils utilisateur et des réservations.
-  - Connexion des personnels de l’agence.
+L'objectif principal de ce projet est de concevoir et de mettre en œuvre une application modulaire et évolutive pour la gestion des rendez-vous et consultations médicales.
 
-  - Génération de factures et de reçus pour les transactions.
+- Développer deux services distincts, le premier pour gérer les informations des patients et des médecins, et le deuxième pour gérer les rendez-vous et les consultations.
 <br>
-- __Espace Client :__
-  - Inscription et connexion des clients.
-  
-  - Recherche de voitures disponibles selon la date, la marque.
-  - Réservation de voitures avec options de paiement en ligne.
+- Assurer l'intégration et la communication efficace entre les services à l'aide de l'API Gateway et des clients REST.
+
+- Utiliser un registre de services pour la découverte et l'enregistrement des services.
+
+- Mettre en place un serveur de configuration pour la gestion centralisée des configurations de services.
+
+- Garantir la sécurité, la fiabilité et la disponibilité de l'application.
 
 
 # Table of Content
 - [Introduction](#introduction)
 - [Objectifs](#objectifs)
 - [Table of Content](#table-of-content)
-- [Conception & Architecture](#conception)
-- [Contenu application(Code Source)](#contenu-application)
-  - [Config-Service](#config)
-  - [Discovery-Service](#discovery)
-  - [Gateway-Service](#gateway)
-  - [First-Service (Medecin-Patient)](#first)
-  - [Second-Service (Rendezvous-Consultation)](#second)
-- [Documentation des Tests avec Swagger UI](#documentation)
+- [Conception & Architecture](#conception--architecture)
+- [Contenu application](#contenu-application)
+  - [First-Service (Medecin-Patient)](#ifirst-service)
+  - [Second-Service (Rendezvous-Consultation)](#iisecond-service)
+  - [Gateway-Service](#iiigateway-service)
+  - [Discovery-Service](#ivdiscovery-service)
+  - [Config-Service](#vconfig-service)
+- [Documentation des Tests avec Swagger UI](#documentation-des-tests-avec-swagger-ui)
 - [Conclusion](#conclusion)
 
+<br><br><br>
 
-# Conception De System Informatique
-
-
+# Conception & Architecture
 
 - __Diagramme de classes :__
 
-![](./screens/2.png)
+    ![](./screens/2.png)
 
-Le diagramme montre quatre entités principales : **Patient**, **Medecin**, **RendezVous**, et **Consultation**. Les Patients peuvent avoir plusieurs RendezVous, chaque RendezVous est pour un Patient et un Medecin spécifique, et à chaque RendezVous correspond une Consultation unique.
+    Le diagramme montre quatre entités principales : **Patient**, **Medecin**, **RendezVous**, et **Consultation**. Les Patients peuvent avoir plusieurs RendezVous, chaque RendezVous est pour un Patient et un Medecin spécifique, et à chaque RendezVous correspond une Consultation unique.
 
 - __Architecture Microservices :__
 
-![](./screens/1.jpg)
+    ![](./screens/1.jpg)
 
-L'application reçoit des requêtes HTTP d'une partie cliente qui interagit avec le système via une API Gateway. Le système est divisé en deux services principaux : le premier service gère les médecins et les patients, et le deuxième service gère les rendez-vous et les consultations. Chaque service interagit avec sa propre base de données.
+    L'application reçoit des requêtes HTTP d'une partie cliente qui interagit avec le système via une API Gateway. Le système est divisé en deux services principaux : le premier service gère les médecins et les patients, et le deuxième service gère les rendez-vous et les consultations. Chaque service interagit avec sa propre base de données.
 
-Il existe également des composants de support tels que la configuration centralisée (Config Server) et l'enregistrement des services (Service Registry ou Discovery Service). Cela indique une structure conçue pour la résilience, la scalabilité et la gestion efficace des configurations et des services dans un environnement de microservices.
+    Il existe également des composants de support tels que la configuration centralisée (Config Server) et l'enregistrement des services (Service Registry ou Discovery Service). Cela indique une structure conçue pour la résilience, la scalabilité et la gestion efficace des configurations et des services dans un environnement de microservices.
 
+    <img src="./screens/3.png" alt="Your Image" width="300"/>
+    <img src="./screens/pom.png" alt="Your Image" width="300"/>
 
-<img src="./screens/3.png" alt="Your Image" width="300"/>
+voici les services de projet, sachant que:
 
-voici les services de projet
+**first service** : Service de Gestion des Patients et Médecins.
 
-<!-- - Client:
-```sql
-CREATE TABLE Client (
-    id_client SERIAL PRIMARY KEY,
-    Nom VARCHAR(255),
-    Prenom VARCHAR(255),
-    Email VARCHAR(255),
-    password VARCHAR(255)
-);
-```
-- Paiement:
-```sql
-CREATE TABLE Paiment (
-    id_paie SERIAL PRIMARY KEY,
-    id_res INT,
-    montant FLOAT,
-    datePaiement DATE,
-    moyen VARCHAR(255),
-    id_fact INT,
-    FOREIGN KEY (id_res) REFERENCES Reservation(id_res),
-    FOREIGN KEY (id_fact) REFERENCES Facture(id_fact)
-);
-```
-- Facture:
-```sql
-CREATE TABLE Facture (
-    id_fact SERIAL PRIMARY KEY,
-    attribute3 VARCHAR(255),
-    attribute4 VARCHAR(255),
-    id_res INT,
-    FOREIGN KEY (id_res) REFERENCES Reservation(id_res)
-);
-```
-- Reservation:
-```sql
-CREATE TABLE Reservation (
-    id_res SERIAL PRIMARY KEY,
-    id_client INT,
-    id_car BIGINT,
-    id_pers INT, -- Ajout de la colonne pour référencer Personnel
-    dateDebut DATE,
-    dateFin DATE,
-    prix FLOAT,
-    FOREIGN KEY (id_client) REFERENCES Client(id_client),
-    FOREIGN KEY (id_car) REFERENCES voiture(id),
-    FOREIGN KEY (id_pers) REFERENCES Personnel(id_pers) -- Nouvelle clé étrangère
-);
-```
-- Personnel:
-```sql
-CREATE TABLE Personnel (
-    id_pers SERIAL PRIMARY KEY,
-    Nom VARCHAR(255),
-    Prenom VARCHAR(255),
-    Email VARCHAR(255),
-    password VARCHAR(255)
-);
-```
-- Voiture:
-```sql
-CREATE TABLE voiture (
-    id SERIAL PRIMARY KEY,
-    make VARCHAR(255),
-    model VARCHAR(255),
-    price NUMERIC,
-    year INTEGER,
-    kilometer NUMERIC,
-    fuel_type VARCHAR(50),
-    transmission VARCHAR(50),
-    location VARCHAR(255),
-    color VARCHAR(50),
-    owner VARCHAR(255),
-    seller_type VARCHAR(50),
-    engine VARCHAR(50),
-    max_power VARCHAR(50),
-    max_torque VARCHAR(50),
-    drivetrain VARCHAR(50),
-    length NUMERIC,
-    width NUMERIC,
-    height NUMERIC,
-    seating NUMERIC,
-    fuel_tank_capacity NUMERIC
-);
-``` -->
+**second service** : Service de Gestion des Rendez-vous et Consultations.
+
+- __Technologies Utilisées :__
+
+    <img src="./screens/4.png" alt="Your Image" width="400"/>
+<br>
 
 # Contenu application
 
-Pour notre application, il est subdiviser en 3 interfaces :
-- welcome Interface
-- Client Interface
-- Personnel Interface
+## <span style="color:green;font-weight: bold;">I.First Service : </span>
 
-## Welcome interface
-<img src="image.png" style="width: 900px; max-width: 100%; height: auto; page-break-inside: avoid;" alt="Alt text">
-Une interface d'accueil efficace pour une application de location de voiture devrait allier esthétique, fonctionnalité et facilité d'utilisation. Voici une description détaillée d'une telle interface :
-- Barre de Navigation en Haut
-- Carrousel d'Images et Offres Spéciales
-- Informations Utiles et Conseils
-- Section Avis des Utilisateurs
-- Pied de Page
-
-![Alt text](image-1.png)
-- Section recherche des voitures
-
-![Alt text](image-2.png)
-
-## Login Interface 
-
-La Deuxieme interface est un formulare Login lie a un formulaire d'inscription qui consiste d'une zone de text et motdepasse avec un button __Sign In__.
-On peut voir que le click sur le button __Sign In__ declanche le processus de login, dont on fetch l'email et le mot de passe entre par l'utilisateur et compare leurs (email, password) pair avec les valeurs entrees par l'utilisateur.
-
-<img src="image-3.png" style="width: 900px; max-width: 100%; height: auto; page-break-inside: avoid;" alt="Alt text">
-
-![Alt text](image-4.png)
-
-Apres connexion, le client a le droit de reserver des voitures entre 2 dates differentes
-
-<img src="image-5.png" style="width: 900px; max-width: 100%; height: auto; page-break-inside: avoid;" alt="Alt text">
-
-![Alt text](image-6.png)
-
-Si la reservation est approuvee par un admin, elles seront affiches dans la categorie paiemen et le client peut proceder a generer la facture de paiement
-
-<img src="image-7.png" style="width: 900px; max-width: 100%; height: auto; page-break-inside: avoid;" alt="Alt text">
-
-![Alt text](image-8.png)
+<img src="./screens/5.png" alt="Your Image" width="200"/>
+<img src="./screens/10.png" alt="Your Image" width="250"/> 
 
 
-## Personnel Interface
+- Entities: 
+![](./screens/6.png)
+
+- Repository:
+    ```java
+    package com.miniprojet.firstservice.repositories;
+    //MedecinRepository
+    @RepositoryRestResource
+    public interface MedecinRepository extends JpaRepository<Medecin, Long> {
+        Medecin findByNom(String nom);
+    }
+    ```
+    ```java
+    package com.miniprojet.firstservice.repositories;
+    //PatientRepository
+    @RepositoryRestResource
+    public interface PatientRepository extends JpaRepository<Patient, Long> {
+        Patient findByNom(String nom);
+    }
+    ```
+- Services:
+![](./screens/7.png)
+
+    ```java
+    public interface PatientsService {
+        Patient savePatient(Patient patient);
+        public List<Patient> getAllPatients();
+        public Patient getPatient(Long auteurId);
+        public void DeletePatient(Long id);
+        public  Patient updatePatient(Patient patient);
+    }
+    ```
+    ```java
+    public interface MedecinService {
+        Medecin saveMedecin(Medecin medecin);
+        public List<Medecin> getAllMedecins();
+        public Medecin getMedecin(Long auteurId);
+        public void DeleteMedecin(Long id);
+        public  Medecin updateMedecin(Medecin medecin);
+    }
+    ```
+- Web:
+    ```java
+    //Medecin Controller
+    @RestController
+    public class MedecinController {
+        @Autowired
+        private MedecinService medecinService;
+        @GetMapping(path = "medecins")
+        public List<Medecin> getMedecins(){
+            return medecinService.getAllMedecins();
+        }
+        @GetMapping("medecins/{medecinId}")
+        public  Medecin getMedecinById(@PathVariable Long medecinId){
+            return medecinService.getMedecin(medecinId);
+        }
+        @DeleteMapping("medecins/{medecinId}")
+        public void deleteMedecin(@PathVariable  Long medecinId){
+            medecinService.DeleteMedecin(medecinId);
+        }
+        @PostMapping("/medecins")
+        public Medecin saveMedecin(@RequestBody Medecin medecin){
+            return medecinService.saveMedecin(medecin);
+        }
+        @PutMapping("medecins/{medecinId}")
+        public  Medecin updateMedecin(@RequestBody Medecin medecin) {
+            return medecinService.updateMedecin(medecin);
+        }
+    }
+    ```
+    ```java
+    //Patient Controller
+    @RestController
+    public class PatientController {
+        @Autowired
+        private PatientsService patientsService;
+        @GetMapping(path = "patients")
+        public List<Patient> getPatients(){
+            return patientsService.getAllPatients();
+        }
+        @GetMapping("patients/{patientId}")
+        public  Patient getPatientById(@PathVariable Long patientId){
+            return patientsService.getPatient(patientId);
+        }
+        @DeleteMapping("patients/{patientId}")
+        public void deletePatient(@PathVariable  Long patientId){
+            patientsService.DeletePatient(patientId);
+        }
+        @PostMapping("/patients")
+        public Patient savePatient(@RequestBody Patient patient){
+            return patientsService.savePatient(patient);
+        }
+        @PutMapping("patients/{patientId}")
+        public Patient updatePatient( @PathVariable Long patientId, @RequestBody Patient patient) {
+            return patientsService.updatePatient(patient);
+        }
+    }
+    ```
+
+- application.properties:
+    ```java
+    spring.application.name=first-service
+    server.port=8081
+    spring.config.import=optional:configserver:http://localhost:9999/}
+    ```
+    Pour importer la configuration à partir du serveur de configuration situé à http://localhost:9999/. Le si le serveur de configuration n'est pas disponible ou ne peut pas être contacté, l'application ne s'arrêtera pas ou ne renverra pas d'erreur.
+
+## <span style="color:green;font-weight: bold;">II.Second Service :</span>
+
+<img src="./screens/11.png" alt="Your Image" width="250"/>
+<img src="./screens/s1.png" alt="Your Image" width="250"/>
+
+- Entities:
+![](./screens/s2.png)
+- Repository:
+    ```java
+    //Consultation Repository
+    @RepositoryRestResource
+    public interface ConsultationRepository extends JpaRepository<Consultation, Long> {
+    }
+    ```
+    ```java
+    //Rendez-vous Repository
+    @RepositoryRestResource
+    public interface RendezvousRepository extends JpaRepository<RendezVous,Long> {
+    }
+    ```
+
+- Model:
+
+    le package model contient toutes les classes dont nous aurons besoin dans le 2ème service à partir du 1er service (**ce ne sont pas des entités JPA**).
+
+    <img src="./screens/model.png" alt="Your Image" width="400"/>
+
+- Client:
 
 
-L'interface de l'admin est principalement caracterisee par la manipulation de tous les clients
+    ```java
+    @FeignClient(name = "FIRST-SERVICE")
+    public interface FirstServiceRestClient {
+        @GetMapping("/patients/{id}")
+        public Patient getPatientById(@PathVariable Long id);
+        @GetMapping("/patients")
+        public List<Patient> getPatients();
+        @GetMapping("/medecins/{id}")
+        public Medecin getMedecinById(@PathVariable Long id);
+        @GetMapping("/medecins")
+        public List<Medecin> getMedecins();
+    }
+    ```
+    **FirstServiceRestClient** : est un client **Feign** utilisé pour interagir avec un service distant. Elle appartient au deuxième service (SECOND-SERVICE) et communique avec le premier service (FIRST-SERVICE). Les méthodes définies dans cette interface correspondent aux points de terminaison du premier service pour récupérer des informations sur les patients et les médecins.
 
-![Alt text](image-9.png)
+    ><span style="color:green"> @FeignClient</span>(name = "FIRST-SERVICE") : Spécifie que cette interface est un client Feign pour le service nommé "FIRST-SERVICE".
 
-Le personnel a le droit d'effectuer la suppression des clients a l'aide du bouton "Delete" au-dessus et d'approuver les reservations effectues
+- Services:
 
-![Alt text](image-10.png)
-Si le personnel approuve une reservation, elle est automatiquement ajoutee au paiement pour le client.sinon, elle est rejetee.
+    on retrouve ici toutes les fonctionnalités **CRUD** pour créer, supprimer mettre à jour et manipuler toutes les entités de notre service.
 
-# Conclusion
+    ```java
+    @Service
+    public  class RendezvousServiceImpl  implements RendezvousService{
+        @Autowired
+        private RendezvousRepository rendezvousRepository;
+        @Autowired
+        private ConsultationRepository consultationRepository;
+        @Autowired
+        private FirstServiceRestClient firstServiceRestClient;
+        @Override
+        public RendezVous saveRendezVous(RendezVous rendezVous){
+            Medecin medecin = firstServiceRestClient.getMedecinById(rendezVous.getMedecinId());
+            Patient patient = firstServiceRestClient.getPatientById(rendezVous.getPatientId());
+            if(medecin!=null && patient!=null){
+            rendezVous.setMedecin(medecin);
+            rendezVous.setPatient(patient);
+            return rendezvousRepository.save(rendezVous);
+            }
+            return null;
+        }
+        @Override
+        public List<RendezVous> getAllRendezVous(){return rendezvousRepository.findAll();}
+        @Override
+        public RendezVous getRendezVous(Long rendezvousId) {
+            RendezVous rendezVous = rendezvousRepository.findById(rendezvousId).orElse(null);
+            Medecin medecin = firstServiceRestClient.getMedecinById(rendezVous.getMedecinId());
+            Patient patient = firstServiceRestClient.getPatientById(rendezVous.getPatientId());
+            rendezVous.setMedecin(medecin);
+            rendezVous.setPatient(patient);
+            return rendezVous;
+        };
+        @Override
+        public void deleteRendezVous(Long id){
+            RendezVous rendezVous = rendezvousRepository.findById(id).orElse(null);
+            if (rendezVous != null) {
+                Consultation consultation = rendezVous.getConsultation();
+                if (consultation != null) {
+                    consultationRepository.deleteById(consultation.getId());
+                }
+                rendezvousRepository.deleteById(id);
+            }
+        };
+        @Override
+        public  RendezVous updateRendezVous(RendezVous rendezVous){
+            RendezVous rv = getRendezVous(rendezVous.getId());
+            rv.setStatusRDV(rendezVous.getStatusRDV());
+            rv.setDate(rendezVous.getDate());
+            rv.setAnnule(rendezVous.isAnnule());
+            rv.setConsultation(rendezVous.getConsultation());
+            rv.setPatientId(rendezVous.getPatientId());
+            rv.setMedecinId(rendezVous.getMedecinId());
+            Medecin medecin = firstServiceRestClient.getMedecinById(rendezVous.getMedecinId());
+            Patient patient = firstServiceRestClient.getPatientById(rendezVous.getPatientId());
+            rv.setMedecin(medecin);
+            rv.setPatient(patient);
+            return rendezvousRepository.save(rv);
+        };
+    }
+    ```
+    pour casser la relation entre FIRST-SERVICE et SECOND-SERVICE (OneToMany), nous obtenons les models dont nous avons besoin en utilisant le firstservicerestclient et les intégrons dans le notre service
 
-En conclusion, cette application offre une solution innovante et pratique pour répondre à nos besoins spécifiques. Elle facilite notre quotidien en simplifiant des tâches complexes, en nous permettant de rester connectés avec nos proches, ou en nous fournissant des informations essentielles. L'efficacité, la convivialité et la valeur ajoutée qu'elle apporte à nos vies en font un outil essentiel à notre époque moderne. Nous espérons que son utilisation continuera à s'améliorer et à évoluer, afin de répondre encore mieux à nos besoins à l'avenir.
+    ```java
+    @Service
+    public class ConsultationServiceImpl implements  ConsultationService{
+        @Autowired
+        private ConsultationRepository consultationRepository;
+        public Consultation saveConsultation(Consultation consultation){return consultationRepository.save(consultation);};
+        public List<Consultation> getAllConsultations(){
+            return consultationRepository.findAll();
+        };
+        public Consultation getConsultation(Long consultationId){
+            return  consultationRepository.findById(consultationId).orElse(null);
+        };
+        public void DeleteConsultation(Long id){
+            consultationRepository.deleteById(id);
+        };
+        public  Consultation updateConsultation(Consultation consultation){
+            Consultation consultation1 = getConsultation(consultation.getId());
+            consultation1.setDateConsultation(consultation.getDateConsultation());
+            consultation1.setRapport(consultation.getRapport());
+            return consultationRepository.save(consultation1);
+        };
+    }
+    ```
+- Web:
+    ```java
+    @RestController
+    public class RendezvousController {
+        @Autowired
+        private RendezvousService rendezvousService;
+        //READ
+        @GetMapping(path = "rendezVous")
+        public List<RendezVous> getRendezVous(){
+            return rendezvousService.getAllRendezVous();
+        }
+        //READ BY ID
+        @GetMapping("rendezVous/{rendezVousId}")
+        public RendezVous getRendezvousById(@PathVariable Long rendezVousId){return rendezvousService.getRendezVous(rendezVousId);}
+        //DELETE
+        @DeleteMapping("rendezVous/{rendezVousId}")
+        public void deleteRendezVous(@PathVariable  Long rendezVousId){rendezvousService.deleteRendezVous(rendezVousId);}
+        //CREATE
+        @PostMapping("rendezVous")
+        public RendezVous saveRendezVous(@RequestBody RendezVous rendezVous){return rendezvousService.saveRendezVous(rendezVous);}
+        //UPDATE
+        @PutMapping("rendezVous/{rendezVousId}")
+        public  RendezVous updateRendezvous(@RequestBody RendezVous rendezVous) {return rendezvousService.updateRendezVous(rendezVous);}
+    }
+    ```
+    ```java
+    @RestController
+    public class ConsultationController {
+        @Autowired
+        private ConsultationService consultationService;
+        @GetMapping(path = "consultations")
+        public List<Consultation> getConsultations(){return consultationService.getAllConsultations();}
+        @GetMapping("consultations/{consultationId}")
+        public Consultation getConsultationById(@PathVariable Long consultationId){
+            return consultationService.getConsultation(consultationId);
+        }
+        @DeleteMapping("consultations/{consultationId}")
+        public void deleteConsultation(@PathVariable  Long consultationId){
+            consultationService.DeleteConsultation(consultationId);
+        }
+        @PostMapping("consultations")
+        public Consultation saveConsultation(@RequestBody Consultation consultation){
+            return consultationService.saveConsultation(consultation);
+        }
+        @PutMapping("consultations/{consultationId}")
+        public  Consultation updateConsultation(@RequestBody Consultation consultation) {
+            return consultationService.updateConsultation(consultation);
+        }
+    }
+    ```
+- application.properties:
+    ```java
+    spring.application.name=second-service
+    server.port=8082
+    spring.config.import=optional:configserver:http://localhost:9999/}
+    feign.client.config.default.loggerLevel=full
+    ```
+
+> <span style="color:red"> **Note:** </span>
+> nous devons ajouter ces annotations à la classe SecondServiceApplication: **@EnableDiscoveryClient @EnableFeignClients**
+
+## <span style="color:green;font-weight: bold;">III.Gateway Service :</span>  
+Le service Gateway agit comme un intermédiaire qui simplifie la complexité des interactions entre le client et les microservices.
+- GatewayServiceApplication:
+    ```java
+    @SpringBootApplication
+    public class GatewayServiceApplication {
+        public static void main(String[] args) {
+            SpringApplication.run(GatewayServiceApplication.class, args);
+        }
+        @Bean
+        DiscoveryClientRouteDefinitionLocator dynamicRoutes(ReactiveDiscoveryClient rdc,DiscoveryLocatorProperties dlp){
+            return new DiscoveryClientRouteDefinitionLocator(rdc,dlp);
+        }
+    }
+    ```
+- application.properties:
+    ```java
+    spring.application.name=gateway-service
+    server.port=8888
+    spring.config.import=optional:configserver:http://localhost:9999/
+    ```
+- application.yml:
+    ```yaml
+    spring:
+    cloud:
+        gateway:
+        routes:
+            - id: r1
+            uri: http://localhost:8081/
+            predicates:
+                - Path=/medecins/**
+            - id: r2
+            uri: http://localhost:8082/
+            predicates:
+                - Path=/rendezVous/**
+    application:
+        name: gateway-service
+    server:
+    port: 8888
+    ```
+    
+Ce fichier .yml est une configuration pour le Gateway Service Il définit des règles de routage pour le service passerelle (API Gateway).
+
+## <span style="color:green;font-weight: bold;">IV.Discovery Service :</span>
+
+Les microservices interrogent le Discovery Service pour trouver les instances disponibles d'autres services auxquels ils souhaitent faire appel. Cela facilite la communication dynamique et l'équilibrage de charge entre les services, et pour une meilleure tolérance aux pannes. Les outils populaires pour le service de découverte incluent Eureka de Netflix que nous utilisons dans notre application.
+
+- DiscoveryServiceApplication:
+    ```java
+    @SpringBootApplication
+    @EnableEurekaServer
+    public class DiscoveryServiceApplication {
+        public static void main(String[] args) {
+            SpringApplication.run(DiscoveryServiceApplication.class, args);
+        }
+    }
+    ```
+- application.properties:
+    ```java
+    spring.application.name=discovery-service
+    server.port=8761
+    #dont register server itself as client
+    eureka.client.fetch-registry=false
+    # does not register itself in the service registry
+    eureka.client.register-with-eureka=false
+    ```
+    voici le server d'Eureka:
+    
+    <img src="./screens/9.png" style="width: 800px; max-width: 100%; height: auto; page-break-inside: avoid;" alt="Alt text">
+
+> <span style="color:green">@EnableEurekaServer</span> : pour activer la fonctionnalité du serveur Eureka dans une application Spring Boot. Lorsqu'elle est appliquée à la classe principale d'un projet Spring Boot, elle indique que l'application agira en tant que serveur Eureka.
+
+## <span style="color:green;font-weight: bold;">V.Config Service :</span>
+- ConfigServiceApplication:
+    ```java
+    @SpringBootApplication
+    @EnableConfigServer
+    public class ConfigServiceApplication {
+        public static void main(String[] args) {
+            SpringApplication.run(ConfigServiceApplication.class, args);
+        }
+    }
+    ```
+- application.properties:
+    ```java
+    spring.application.name=config-service
+    server.port=9999
+    #spring.cloud.config.server.git.uri=file://${user.home}/config
+    spring.cloud.discovery.enabled=true
+    #spring.cloud.config.server.git.default-label=master
+    spring.cloud.config.server.git.uri=file:///C:/Users/RPC/Desktop/Mini-Projet/microservices/config
+    ```
+- config(dossier):
+<img src="./screens/8.png" alt="Your Image" width="180"/>  
+
+    pour fournir un support de configuration centralisé et externe aux applications, nous mettons le fichier de configuration de chaque service(configurations de base de données...) dans le répertoire de **config**.
+
+    | service | properties |
+    | ----------- | ----------- |
+    | first-service | ![](./screens/prop1.png) |
+    | second-service | ![](./screens/prop2.png) |
+    | application.properties | ![](./screens/prop3.png) |
+
+<br>
+
+# Documentation des Tests avec Swagger UI
+
+avant d'exécuter tous les services pour tester les API et leurs méthodes, nous ajoutons le package d'openAPI au pom.xml du chaque service (first-service & second-service) afin d'obtenir une interface UI:
+```xml
+<dependency>
+    <groupId>org.springdoc</groupId>
+    <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+    <version>2.3.0</version>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-validation</artifactId>
+    <version>3.2.1</version>
+</dependency>
+```
+
+> <span style="color:red"> **Note:** </span>
+> nous avons ajouté quelques données dans les deux services pour tester et visualiser.
+
+<img src="./screens/db1.png" alt="Your Image" width="140"/>
+<img src="./screens/db2.png" alt="Your Image" width="140"/>
+<img src="./screens/db3.png" alt="Your Image" width="320"/>
+
+<br>
+
+## 1. Service de Gestion des Patients et Médecins: 
+
+Nous pouvons accéder à l'API en utilisant cette URL (depuis le Gateway) : <img src="./screens/link1.png" alt="Your Image" width="300"/>
+
+- __Patient :__
+
+    <img src="./screens/p0.png" style="width: 800px; max-width: 100%; height: auto; page-break-inside: avoid;" alt="Alt text">
+
+    #### *Afficher tous les patients*
+    <img src="./screens/p1.png" alt="Your Image" width="400"/>
+
+    #### *Ajouter un patient*
+    <img src="./screens/p2.png" alt="Your Image" width="400"/>
+
+    #### *Afficher un patient par son identifiant*
+    <img src="./screens/p3.png" alt="Your Image" width="400"/>
+
+    #### *Mettre à jour un patient*
+    <img src="./screens/p4.png" alt="Your Image" width="400"/>
+
+    #### *Supprimer un patient*
+    <img src="./screens/p5.png" alt="Your Image" width="400"/>
+
+- __Medecin :__
+
+    <img src="./screens/m1.png" style="width: 800px; max-width: 100%; height: auto; page-break-inside: avoid;" alt="Alt text">
+
+    #### *Afficher tous les medecins*
+    <img src="./screens/m2.png" alt="Your Image" width="400"/>
+
+    #### *Ajouter un medecin*
+    <img src="./screens/m3.png" alt="Your Image" width="550"/>
+
+    #### *Afficher un medecin par son identifiant*
+    <img src="./screens/m4.png" alt="Your Image" width="400"/>
+
+    #### *Mettre à jour un medecin*
+    <img src="./screens/m5.png" alt="Your Image" width="400"/>
+
+    #### *Supprimer un medecin*
+    <img src="./screens/m6.png" alt="Your Image" width="400"/>
+
+    #### *Afficher un Medecin par son nom*
+    <img src="./screens/m6.png" alt="Your Image" width="400"/>
+
+<br>
+
+## 2. Service de Gestion des Rendez-vous et Consultations: 
+
+Nous pouvons accéder à l'API en utilisant cette URL (depuis le Gateway) : <img src="./screens/link2.png" alt="Your Image" width="300"/>
+
+- __RendezVous :__
+
+    <img src="./screens/r0.png" style="width: 800px; max-width: 100%; height: auto; page-break-inside: avoid;" alt="Alt text">
+
+    #### *Afficher tous les rendezVous*
+    <img src="./screens/r1.png" alt="Your Image" width="400"/>
+
+    #### *Ajouter un rendezVous*
+    <img src="./screens/r2.png" alt="Your Image" width="400"/>
+
+    #### *Afficher un rendezVous par son identifiant*
+    <img src="./screens/r3.png" alt="Your Image" width="400"/>
+
+    #### *Mettre à jour un rendezVous*
+    <img src="./screens/r4.png" alt="Your Image" width="400"/>
+
+    #### *Supprimer un rendezVous*
+    <img src="./screens/r5.png" alt="Your Image" width="400"/>
+
+- __Consultation :__
+
+    <img src="./screens/c0.png" style="width: 800px; max-width: 100%; height: auto; page-break-inside: avoid;" alt="Alt text">
+
+    #### *Afficher tous les consultations*
+    <img src="./screens/c1.png" alt="Your Image" width="400"/>
+
+    #### *Ajouter une consultation*
+    <img src="./screens/c2.png" alt="Your Image" width="550"/>
+
+    #### *Afficher une consultation par son identifiant*
+    <img src="./screens/c3.png" alt="Your Image" width="400"/>
+
+    #### *Mettre à jour une consultation*
+    <img src="./screens/c4.png" alt="Your Image" width="400"/>
+
+    #### *Supprimer une consultation*
+    <img src="./screens/c5.png" alt="Your Image" width="400"/>
+
+<br>
+
+## Conclusion
+
+L'approche microservices adoptée pour la conception de l'application de gestion des rendez-vous et consultations médicales a démontré une amélioration significative de la modularité et de la scalabilité du système. Grâce à la séparation des préoccupations, chaque service peut être développé, déployé et mis à jour indépendamment, permettant une maintenance et une évolution plus aisées de l'application. L'utilisation d'une API Gateway a simplifié l'interaction entre les clients et les services, tandis que l'intégration du registre de services et du serveur de configuration a renforcé la cohérence et la fiabilité de la configuration.
+
+ >vous pouvez trouver le code source du projet dans mon github : [Microservices-Mini-Projet](https://github.com/YiiSauce/Microservices-Mini-Projet/tree/main/microservices)
