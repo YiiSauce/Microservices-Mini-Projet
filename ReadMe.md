@@ -602,4 +602,4 @@ Nous pouvons accéder à l'API en utilisant cette URL (depuis le Gateway) : <img
 
 L'approche microservices adoptée pour la conception de l'application de gestion des rendez-vous et consultations médicales a démontré une amélioration significative de la modularité et de la scalabilité du système. Grâce à la séparation des préoccupations, chaque service peut être développé, déployé et mis à jour indépendamment, permettant une maintenance et une évolution plus aisées de l'application. L'utilisation d'une API Gateway a simplifié l'interaction entre les clients et les services, tandis que l'intégration du registre de services et du serveur de configuration a renforcé la cohérence et la fiabilité de la configuration.
 
- >vous pouvez trouver le code source du projet dans mon github : [Microservices-Mini-Projet](https://github.com/YiiSauce/Microservices-Mini-Projet/tree/main/microservices)
+ >vous pouvez trouver le code source du projet dans mon github : [Microservices-Mini-Projet](https://github.com/YiiSauce/Microservices-Mini-Projet/tree/monolith/microservices)
